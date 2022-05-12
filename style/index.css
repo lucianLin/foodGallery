@@ -1,0 +1,158 @@
+body {
+    background-color: #EEEEEE;
+    padding: 20px 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+header {
+    margin: 0 auto 15px;
+}
+
+.title {
+    text-align: center;
+    color: #5D5F66;
+    font-size: 28px;
+    font-weight: 900;
+}
+
+.container {
+    max-width: 1160px;
+    margin: 0 auto;
+}
+
+.selectPanel {
+    margin-bottom: 15px;
+    background-color: #ffffff;
+    padding: 12px 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    border-radius: 5px;
+}
+
+.select {
+    width: 170px;
+    background-color: #DDDDDD;
+    border-radius: 3px;
+    border: 0;
+    font-size: 12px;
+    padding: 10px;
+}
+
+.select:focus {
+    outline: none;
+    border: 0;
+}
+
+.gallery {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.galleryItem {
+    width: 32%;
+    height: 180px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    transition: .5s;
+    overflow: hidden;
+}
+
+.galleryItem:hover img {
+    transform: scale(1.05);
+}
+
+.galleryItem:hover .galleryItem__line {
+    display: block;
+}
+
+.galleryItem:hover .galleryItem__detail p {
+    display: block;
+}
+
+
+.galleryItem__tag {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 5px;
+    background-color: #E59402;
+    color: #ffffff;
+}
+
+.galleryItem__detail {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    color: #ffffff;
+}
+
+.galleryItem img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: .5s;
+}
+
+.galleryItem__detail h3 {
+    color: #ffffff;
+    font-size: 14px;
+    font-style: italic;
+    margin-bottom: 10px;
+}
+
+.galleryItem__detail h4 {
+    color: #ffffff;
+    margin-bottom: 10px;
+    font-weight: 900;
+}
+
+.galleryItem__line {
+    transition: .5s;
+    width: 45px;
+    height: 3px;
+    margin-bottom: 10px;
+    background-color: #ffffff;
+    display: none;
+}
+
+.galleryItem__detail p {
+    overflow: hidden;
+    height: 30px;
+    display: none;
+}
+
+@media (max-width: 767px) {
+    .selectPanel {
+        background-color: transparent;
+        flex-direction: column;
+    }
+    .select {
+        width: 100%;
+    }
+    .container {
+        padding :20px;
+    }
+    .galleryItem {
+        width: 100%;
+    }   
+}
+
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    text-align: center;
+}
