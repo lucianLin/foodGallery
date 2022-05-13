@@ -16,8 +16,9 @@ header {
 }
 
 .container {
-    max-width: 1160px;
+    max-width: 1200px;
     margin: 0 auto;
+    padding: 20px;
 }
 
 .selectPanel {
@@ -45,20 +46,19 @@ header {
 }
 
 .gallery {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 15px;
 }
 
 .galleryItem {
-    width: 32%;
-    height: 180px;
+    height: 195px;
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: center center;
     transition: .5s;
     overflow: hidden;
+    background: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0.5));
 }
 
 .galleryItem:hover img {
@@ -85,12 +85,13 @@ header {
 
 .galleryItem__detail {
     position: absolute;
-    bottom: 5px;
-    left: 5px;
+    bottom: 10px;
+    left: 12px;
     color: #ffffff;
 }
 
 .galleryItem img {
+    z-index: -1;
     position: absolute;
     top: 0;
     left: 0;
@@ -100,7 +101,7 @@ header {
 }
 
 .galleryItem__detail h3 {
-    color: #ffffff;
+    color: #dddddd;
     font-size: 14px;
     font-style: italic;
     margin-bottom: 10px;
@@ -123,24 +124,9 @@ header {
 
 .galleryItem__detail p {
     overflow: hidden;
-    height: 30px;
+    height: 28px;
     display: none;
-}
-
-@media (max-width: 767px) {
-    .selectPanel {
-        background-color: transparent;
-        flex-direction: column;
-    }
-    .select {
-        width: 100%;
-    }
-    .container {
-        padding :20px;
-    }
-    .galleryItem {
-        width: 100%;
-    }   
+    font-size: 14px;
 }
 
 .loading {
@@ -155,4 +141,35 @@ header {
     align-items: center;
     color: #fff;
     text-align: center;
+}
+
+@media (max-width: 768px) {
+    /* .selectPanel {
+        background-color: transparent;
+        flex-direction: column;
+    }
+    .select {
+        width: 100%;
+    } */
+    
+    .gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 576px) {
+    .selectPanel {
+        background-color: transparent;
+        flex-direction: column;
+    }
+    .select {
+        width: 100%;
+    }
+    .container {
+        padding :20px;
+    }
+    
+    .gallery {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
 }

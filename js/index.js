@@ -26,7 +26,7 @@ function setLoading(status) {
 class Gallery {
     constructor() {
         this._instance = null
-
+        
         this._selectCity = null
         this._selectTown = null
     }
@@ -72,17 +72,16 @@ class Gallery {
         eleSelectCity.innerHTML = `<option selected="true" disabled>請選擇行政區...</option>`
 
         // composite element into eleSelectCity
-        Object.keys(this.datas).forEach(item=>{
-            let innerHtml = `<option value="${item}">${item}</option>`
-            eleSelectCity.innerHTML += innerHtml
-        })
+        const cityItems = Object.keys(this.datas)
+        eleSelectCity.innerHTML += this.makeTemplateString(selectTemplate,cityItems)
 
         eleSelectTown.innerHTML = `<option selected="true" disabled>請選擇鄉鎮區...</option>`
 
         let that = this
         eleSelectCity.addEventListener('change',function() {
-            const townData = that.datas[this.value]
-            if(!townData) {
+            const townItems = Object.keys(that.datas[this.value])
+
+            if(!townItems) {
                 return     
             }
 
@@ -90,10 +89,7 @@ class Gallery {
             eleSelectTown.innerHTML = `<option selected="true" disabled>請選擇鄉鎮區...</option>`
             
             // composite element into eleSelectCity
-            Object.keys(townData).forEach(item=>{
-                let innerHtml = `<option value="${item}">${item}</option>`
-                eleSelectTown.innerHTML += innerHtml
-            })
+            eleSelectTown.innerHTML += that.makeTemplateString(selectTemplate, townItems)
 
             that._selectCity = this.value
             that.setGalleryUI(that._selectCity)
@@ -112,86 +108,35 @@ class Gallery {
         // clear gallery datas
         eleGallery.innerHTML = ''
         
+        let innerHtml  = ""
+
         if(city === 'all') {
-            Object.keys(this.datas).forEach(city=>{
-                Object.keys(this.datas[city]).forEach(town=>{
-                    this.datas[city][town].forEach(item=>{
-                        eleGallery.innerHTML += `
-                            <li class="galleryItem">
-                                <img src="${item.PicURL}" alt="${item.Town}">
-                                <div class="galleryItem__tag">
-                                    ${item.City}
-                                </div>
-                                <div class="galleryItem__detail">
-                                    <h3>
-                                        ${item.Town}
-                                    </h3>
-                                    <h4>
-                                        ${item.Name}
-                                    </h4>
-                                    <div class="galleryItem__line"></div>
-                                    <p>
-                                        ${item.HostWords}
-                                    </p>
-                                </div>
-                            </li>
-                        `
-                    })
+            Object.keys(this.datas).forEach(cityItem=>{
+                Object.keys(this.datas[cityItem]).forEach(townItem=>{
+                    innerHtml +=  this.makeTemplateString(galleryTemplate,this.datas[cityItem][townItem])
                 })
             })
+        } else if(town === 'all') {
+            Object.keys(this.datas[city]).forEach(townItem=>{
+                innerHtml +=  this.makeTemplateString(galleryTemplate,this.datas[city][townItem])
+            })
         } else {
-            if(town === 'all') {
-                Object.keys(this.datas[city]).forEach(town=>{
-                    this.datas[city][town].forEach(item=>{
-                        eleGallery.innerHTML += `
-                            <li class="galleryItem">
-                                <img src="${item.PicURL}" alt="${item.Town}">
-                                <div class="galleryItem__tag">
-                                    ${item.City}
-                                </div>
-                                <div class="galleryItem__detail">
-                                    <h3>
-                                        ${item.Town}
-                                    </h3>
-                                    <h4>
-                                        ${item.Name}
-                                    </h4>
-                                    <div class="galleryItem__line"></div>
-                                    <p>
-                                        ${item.HostWords}
-                                    </p>
-                                </div>
-                            </li>
-                        `
-                    })
-                })
-            } else {
-                this.datas[city][town].forEach((item)=>{
-                    eleGallery.innerHTML += `
-                        <li class="galleryItem">
-                            <img src="${item.PicURL}" alt="${item.Town}">
-                            <div class="galleryItem__tag">
-                                ${item.City}
-                            </div>
-                            <div class="galleryItem__detail">
-                                <h3>
-                                    ${item.Town}
-                                </h3>
-                                <h4>
-                                    ${item.Name}
-                                </h4>
-                                <div class="galleryItem__line"></div>
-                                <p>
-                                    ${item.HostWords}
-                                </p>
-                            </div>
-                        </li>
-                    `
-                })
-            }
+            innerHtml += this.makeTemplateString(galleryTemplate,this.datas[city][town])
         }
+
+
+        eleGallery.innerHTML = innerHtml
     }
 
+    makeTemplateString(templateFn,data) {
+        let result = ""
+
+        data.forEach(item=>{
+            result += templateFn(item)
+        })
+
+        return result
+    }
     // safety pattern
     static getInstance() {
         if(!this.instance) {
@@ -200,8 +145,36 @@ class Gallery {
 
         return this.instance
     }
+
 }
 
+
+function galleryTemplate(item) {
+    return `
+        <li class="galleryItem">
+            <img src="${item.PicURL}" alt="${item.Town}">
+            <div class="galleryItem__tag">
+                ${item.City}
+            </div>
+            <div class="galleryItem__detail">
+                <h3>
+                    ${item.Town}
+                </h3>
+                <h4>
+                    ${item.Name}
+                </h4>
+                <div class="galleryItem__line"></div>
+                <p>
+                    ${item.HostWords}
+                </p>
+            </div>
+        </li>
+    `
+}
+
+function selectTemplate(item) {
+    return `<option value="${item}">${item}</option>`
+}
 
 // main
 (async function() {
