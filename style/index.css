@@ -43,6 +43,21 @@ main {
     border: 0;
     font-size: 15px;
     padding: 10px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+}
+
+.select__icon::after {
+    content: '';
+    position: absolute;
+    right: 10px;
+    pointer-events: none;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 3px solid transparent;
+    border-top: 6px solid #000;
 }
 
 .select:focus {
