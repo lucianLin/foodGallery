@@ -75,8 +75,6 @@ class Gallery {
         const cityItems = Object.keys(this.datas)
         eleSelectCity.innerHTML += this.makeTemplateString(selectTemplate,cityItems)
 
-        eleSelectTown.innerHTML = `<option selected="true" disabled>請選擇鄉鎮區...</option>`
-
         let that = this
         eleSelectCity.addEventListener('change',function() {
             const townItems = Object.keys(that.datas[this.value])
@@ -137,15 +135,15 @@ class Gallery {
 
         return result
     }
+
     // safety pattern
     static getInstance() {
-        if(!this.instance) {
-            this.instance = new Gallery()
+        if(!this._instance) {
+            this._instance = new Gallery()
         }
 
-        return this.instance
+        return this._instance
     }
-
 }
 
 
