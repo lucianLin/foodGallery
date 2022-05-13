@@ -25,7 +25,11 @@ function setLoading(status) {
 
 class Gallery {
     constructor() {
-        this._instance = null
+        // singleton 
+        if (Gallery._instance) {
+            throw new Error("Singleton classes can't be instantiated more than once.")
+        }
+        Gallery._instance = this;
         
         this._selectCity = null
         this._selectTown = null
@@ -135,15 +139,6 @@ class Gallery {
 
         return result
     }
-
-    // safety pattern
-    static getInstance() {
-        if(!this._instance) {
-            this._instance = new Gallery()
-        }
-
-        return this._instance
-    }
 }
 
 
@@ -176,7 +171,7 @@ function selectTemplate(item) {
 
 // main
 (async function() {
-    const gallery = Gallery.getInstance()
+    const gallery = new Gallery()
 
     gallery.init()
 }())
