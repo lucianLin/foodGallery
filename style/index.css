@@ -147,23 +147,24 @@ main {
     text-align: center;
 }
 
-footer {
-    display: flex;
-    flex-direction: column;
+.footer {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
     bottom: 10px;
 }
 
-footer p {
+.footer p {
     color: #A0A09E;
     font-weight: 700;
     text-align: center;
     margin-bottom: 5px;
 }
 
-footer a {
+.footer a {
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
     color: #696969;
     margin: 0 auto;
 }
